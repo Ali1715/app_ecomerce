@@ -1,4 +1,6 @@
+import 'package:application_ecommerce/pages/login_screen.dart';
 import 'package:application_ecommerce/services/services.dart';
+import 'package:application_ecommerce/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:application_ecommerce/pages/pages.dart';
 import 'package:application_ecommerce/models/models.dart';
@@ -32,6 +34,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -45,7 +48,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: LoginScreen(),
       routes: {
         //  'Catalogo_page': (context) => CatalogoPage(),
 

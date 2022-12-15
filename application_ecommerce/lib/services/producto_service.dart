@@ -42,7 +42,7 @@ class productoService extends ChangeNotifier {
     final resp = await http.get(url);
 
     final List<dynamic> productoMap = json.decode(resp.body);
-
+    //print(productoMap);
     //for (var items in productoMap) {
     productoMap.forEach((value) {
       final tempPro = Productos.fromMap(value);

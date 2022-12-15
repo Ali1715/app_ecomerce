@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
-import 'package:application_ecommerce/widgest/widgests.dart';
+import 'package:application_ecommerce/widgets/widgets.dart';
 import 'package:application_ecommerce/services/services.dart';
 import 'package:provider/provider.dart';
 //import 'package:application_ecommerce/providers/providers.dart';
