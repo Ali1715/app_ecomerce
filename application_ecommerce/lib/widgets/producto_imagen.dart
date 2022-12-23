@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class ProductoImagen extends StatelessWidget {
   //const ProductoImagen({super.key});
+  final String? url;
+  const ProductoImagen({Key? key, this.url}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +16,19 @@ class ProductoImagen extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(45), topRight: Radius.circular(45)),
-          child: FadeInImage(
-            //image: NetworkImage('https://via.placeholder.com/400x300/green'),
-            image: AssetImage('assets/Laptop_HP_De_15_6_Pulgadas.png'),
-            placeholder: AssetImage('assets/jar-loading.gif'),
-            fit: BoxFit.cover,
-          ),
+          child: this.url == null
+              ? Image(
+                  image: AssetImage('assets/no-image.png'),
+                  fit: BoxFit.cover,
+                )
+              : FadeInImage(
+                  //image: NetworkImage('https://via.placeholder.com/400x300/green'),
+                  // image: AssetImage('assets/Laptop_HP_De_15_6_Pulgadas.png'),
+                  placeholder: AssetImage('assets/jar-loading.gif'),
+                  image: NetworkImage(
+                      'http://192.168.0.18:8000/public/img/' + this.url!),
+                  fit: BoxFit.cover,
+                ),
         ),
       ),
     );
@@ -27,7 +36,7 @@ class ProductoImagen extends StatelessWidget {
 }
 
 BoxDecoration _buildBoxDecorationImagen() => BoxDecoration(
-        color: Colors.red,
+        color: Colors.green,
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(45), topRight: Radius.circular(45)),
         boxShadow: [

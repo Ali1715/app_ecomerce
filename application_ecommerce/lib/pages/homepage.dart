@@ -45,7 +45,21 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => const CartPage()),
                 );
               },
-              icon: Icon(Icons.shopping_cart))
+              icon: Icon(Icons.shopping_cart)),
+          IconButton(
+            icon: const Icon(
+              Icons.logout_outlined,
+              size: 32,
+            ),
+            onPressed: () {
+              logout().then((value) => {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()),
+                        (route) => false)
+                  });
+            },
+          ),
         ],
       ),
       drawer: SidebarX(
@@ -87,92 +101,24 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-
-            /*  FutureBuilder<List<Productos>>(
-              future: _catalogoShow(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return GridView.builder(
-                      itemCount: snapshot.data!.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                            padding: EdgeInsets.all(5),
-                            child: Container(
-                                decoration: new BoxDecoration(
-                                    image: new DecorationImage(
-                                        image: new NetworkImage(
-                                            snapshot.data.toString()),
-                                        fit: BoxFit.cover))));
-                      });
-                }
-                return Center(child: CircularProgressIndicator());
-              },
-            ),*/
             Expanded(
                 child: ListView.builder(
               itemCount: productosService.productos.length,
               itemBuilder: (BuildContext context, int index) => GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, 'Producto'),
-                  child: ProductCard(
-                    product: productosService.productos[index],
-                  )),
-            ))
+                onTap: () {
+                  productosService.selectedProduct =
+                      productosService.productos[index].copy();
+
+                  Navigator.pushNamed(context, 'Producto');
+                },
+                child: ProductCard(
+                  product: productosService.productos[index],
+                ),
+              ),
+            )),
           ],
         ),
       ),
     );
   }
-
-  /*Future<List<Productos>> _catalogoShow1() async {
-    try {
-      var response = await Dio().get("http://127.0.0.1:8000/api/catalogo");
-
-      return [];
-    } catch (e) {
-      print(e);
-      return [];
-    }
-  }*/
-
-/*****************************
-
-
-  Future<List<Productos>> _catalogoShow() async {
-    //   Dio dio = Dio();
-    //try {
-    final response =
-        await http.get(Uri.parse('http://192.168.0.18:8000/api/catalogo'));
-    // .timeout(Duration(seconds: 5));
-
-    if (response.statusCode == 200) {
-      // return compute(parseGalleryData, response.body);
-      //    final body = utf8.decode(response.bodyBytes);
-      List<dynamic> jsonData = response.bodyBytes;
-      print(jsonData);
-      List<Productos> items = [];
-      for (dynamic item in jsonData) {
-        items.add(Productos.fromJson(item));
-      }
-
-      return items;
-    } else {
-      print("Error");
-      return [];
-    }
-    //  } catch (e) {
-    //   throw Exception('Failed to load');
-    // }
-  }
-
-
-
-
-  *****************************/
-
-  /*List<String> parseGalleryData(String responseBody) {
-    final parsed = List<String>.from(json.decode(responseBody));
-    return parsed;
-  }*/
 }

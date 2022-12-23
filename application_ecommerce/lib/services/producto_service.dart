@@ -14,6 +14,7 @@ class productoService extends ChangeNotifier {
 
   final List<Productos> productos = [];
   var productosresp = <Productos>[];
+  late Productos selectedProduct;
   bool isLoading = true;
 
   productoService() {

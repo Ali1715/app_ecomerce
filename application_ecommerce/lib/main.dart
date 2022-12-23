@@ -48,13 +48,15 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      // home: LoginScreen(),
+      home: HomePage(),
       routes: {
         //  'Catalogo_page': (context) => CatalogoPage(),
 
         'Carrito_Page': (context) => CartPage(),
         'home': (context) => HomePage(),
-        'Producto': (context) => ProductoDetalles(),
+        'Producto': (context) => ProductoScreen(),
+        'AddCarrito': (context) => CartPage(), //Metodo
       },
     );
   }

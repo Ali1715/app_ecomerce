@@ -1,7 +1,10 @@
 import 'package:application_ecommerce/models/models.dart';
+import 'package:application_ecommerce/pages/carrito.dart';
 import 'package:application_ecommerce/services/producto_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:application_ecommerce/services/services.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
   //const ProductCard({super.key});
@@ -26,7 +29,8 @@ class ProductCard extends StatelessWidget {
           _backgroundImage(product.imagen),
           _ProductDetalles(product),
           Positioned(top: 0, right: 0, child: _PrecioTag(product)),
-          //   Positioned(top: 0, left: 0, child: _enOferta()),
+          // Positioned(top: 0, left: 0, child: _enOferta()),
+          Positioned(top: 150, left: 320, child: carritoIcon()),
         ],
       ),
     );
@@ -56,7 +60,7 @@ class _backgroundImage extends StatelessWidget {
         child: FadeInImage(
           placeholder: AssetImage('assets/no-image.png'),
           //image: AssetImage('assets/Laptop_HP_De_15_6_Pulgadas.png'),
-          image: NetworkImage('http://192.168.19.19:8000/public/img/' + url!),
+          image: NetworkImage('http://192.168.0.18:8000/public/img/' + url!),
           fit: BoxFit.cover,
         ),
       ),
@@ -178,3 +182,21 @@ class _PrecioTag extends StatelessWidget {
     );
   }
 }*/
+///Mostrar de manera condicional
+class carritoIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final productosService = Provider.of<productoService>(context);
+    return Container(
+        child: Column(
+      children: <Widget>[
+        IconButton(
+            onPressed: () {
+              ProductCard(product: productosService.selectedProduct);
+              // Navigator.pushNamed(context, 'AddCarrito');
+            },
+            icon: Icon(Icons.shopping_cart))
+      ],
+    ));
+  }
+}

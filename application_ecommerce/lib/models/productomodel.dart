@@ -60,4 +60,17 @@ class Productos {
         "created_at": created_at,
         "updated_at": updated_at,
       };
+
+  Productos copy() => Productos(
+        id: this.id,
+        name: this.name,
+        descripcion: this.descripcion,
+        stock: this.stock,
+        precioUnitario: this.precioUnitario,
+        imagen: this.imagen,
+        idcategoria: this.idcategoria,
+        idmarca: this.idmarca,
+        created_at: this.created_at,
+        updated_at: this.updated_at,
+      );
 }

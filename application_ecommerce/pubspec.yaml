@@ -40,6 +40,7 @@ dependencies:
   velocity_x: ^3.6.0
   shared_preferences: ^2.0.15
   image_picker: ^0.8.6
+  flutter_rating_bar: ^4.0.1
   
   #image_picker: ^0.8.6
 
