@@ -60,7 +60,7 @@ class _backgroundImage extends StatelessWidget {
         child: FadeInImage(
           placeholder: AssetImage('assets/no-image.png'),
           //image: AssetImage('assets/Laptop_HP_De_15_6_Pulgadas.png'),
-          image: NetworkImage('http://192.168.0.18:8000/public/img/' + url!),
+          image: NetworkImage('http://192.168.0.16:8000/public/img/' + url!),
           fit: BoxFit.cover,
         ),
       ),

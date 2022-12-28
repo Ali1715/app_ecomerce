@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 // Strings URL
-const baseUrl = 'http://192.168.0.18:8000/api';
-const apiToken = 'base64:4|yXRpiLRPlJXgB264KHkA4gr6KMpVCKnrJ9NI6JKU';
+const baseUrl = 'http://192.168.0.16:8000/api';
+const apiToken = 'base64:2|YoNOpWPhOO26UojAVAT5KNYcRaP2KmIFLoff0y0z';
 const loginUrl = '$baseUrl/login/';
 const registerUrl = '$baseUrl/register/';
 const logoutUrl = "$baseUrl/logout/";

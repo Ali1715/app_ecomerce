@@ -10,7 +10,7 @@ class productoService extends ChangeNotifier {
   //var db_p = new Mysql();
   //var name = '';
 
-  final String _baseUrl = 'http://192.168.0.18:8000/api/productos';
+  final String _baseUrl = 'http://192.168.0.16:8000/api/productos';
 
   final List<Productos> productos = [];
   var productosresp = <Productos>[];

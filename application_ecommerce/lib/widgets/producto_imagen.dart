@@ -26,7 +26,7 @@ class ProductoImagen extends StatelessWidget {
                   // image: AssetImage('assets/Laptop_HP_De_15_6_Pulgadas.png'),
                   placeholder: AssetImage('assets/jar-loading.gif'),
                   image: NetworkImage(
-                      'http://192.168.0.18:8000/public/img/' + this.url!),
+                      'http://192.168.0.16:8000/public/img/' + this.url!),
                   fit: BoxFit.cover,
                 ),
         ),
