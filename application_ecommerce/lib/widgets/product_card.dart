@@ -184,8 +184,12 @@ class _PrecioTag extends StatelessWidget {
 }*/
 ///Mostrar de manera condicional
 class carritoIcon extends StatelessWidget {
+  //int _ItemCountadd = 0;
+  int _ItemCountadd = 1;
+  int ItemCountadd2 = 0;
   @override
   Widget build(BuildContext context) {
+    //  int _ItemCountadd = 1;
     final productosService = Provider.of<productoService>(context);
     return Container(
         child: Column(
@@ -193,10 +197,42 @@ class carritoIcon extends StatelessWidget {
         IconButton(
             onPressed: () {
               ProductCard(product: productosService.selectedProduct);
+
+              //addProductToCart();
+              _ItemCountadd = ItemCountadd2 + 1;
+              ItemCountadd2 = _ItemCountadd;
+
               // Navigator.pushNamed(context, 'AddCarrito');
             },
             icon: Icon(Icons.shopping_cart))
       ],
     ));
   }
+
+  int addProductToCart() {
+    return addProductToCart2(ItemCountadd2);
+  }
+
+  @override
+  int addProductToCart2(int add) {
+    return add += 1;
+  }
 }
+
+
+
+  
+
+  /*int cantidadProducto(int num) {
+    //VxState.watch(context, on: []); //RemoveMutation]);
+
+    //  final store = MyStore();
+    //final Carritos _cart = (VxState.store as MyStore).cart;
+    //return _cart.items.isEmpty
+  
+    _cart += num;
+
+    return (_cart);
+  }
+
+*/

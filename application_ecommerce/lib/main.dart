@@ -6,6 +6,7 @@ import 'package:application_ecommerce/pages/pages.dart';
 import 'package:application_ecommerce/models/models.dart';
 import 'package:application_ecommerce/providers/providers.dart';
 import 'package:provider/provider.dart';
+import 'package:vxstate/vxstate.dart';
 
 void main() {
   runApp(AppEstado());

@@ -449,7 +449,7 @@ packages:
     source: hosted
     version: "3.6.0"
   vxstate:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: vxstate
       url: "https://pub.dartlang.org"
