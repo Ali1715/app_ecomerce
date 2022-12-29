@@ -1,132 +1,143 @@
 import 'package:flutter/material.dart';
-import 'package:application_ecommerce/providers/login_form_providers.dart';
-import 'package:application_ecommerce/services/services.dart';
-import 'package:provider/provider.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:application_ecommerce/models/api_response.dart';
+import 'package:application_ecommerce/models/user.dart';
+import 'package:application_ecommerce/pages/homepage.dart';
+//import 'package:application_ecommerce/screens/user/user_screen.dart';
+import 'package:application_ecommerce/services/user_service.dart';
 import 'package:application_ecommerce/ui/input_decorations.dart';
 import 'package:application_ecommerce/widgets/widgets.dart';
+import 'package:application_ecommerce/constant.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtPassword = TextEditingController();
+  bool loading = false;
+
+  void _loginUser() async {
+    ApiResponse response = await login(txtEmail.text, txtPassword.text);
+    if (response.error == null) {
+      _saveAndRedirectToHome(response.data as User);
+    } else {
+      setState(() {
+        loading = false;
+      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('${response.error}')));
+    }
+  }
+
+  void _saveAndRedirectToHome(User user) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString('token', user.token ?? '');
+    await pref.setInt('userId', user.id ?? 0);
+
+    // ignore: use_build_context_synchronously
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const HomePage()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: AuthBackground(
-            child: SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: 250),
-          CardContainer(
+      body: AuthBackground(
+        child: SingleChildScrollView(
+          // Permite hacer scroll si sus hijos sobrepasan la cantidad de tamaño
+          child: Column(children: [
+            const SizedBox(
+              height: 250,
+            ),
+            CardContainer(
               child: Column(
-            children: [
-              SizedBox(height: 10),
-              Text('Login', style: Theme.of(context).textTheme.headline4),
-              SizedBox(height: 30),
-              ChangeNotifierProvider(
-                  create: (_) => LoginFormProvider(), child: _LoginForm())
-            ],
-          )),
-          SizedBox(height: 50),
-          TextButton(
-              onPressed: () =>
-                  Navigator.pushReplacementNamed(context, 'register'),
-              style: ButtonStyle(
-                  overlayColor:
-                      MaterialStateProperty.all(Colors.orange.withOpacity(0.1)),
-                  shape: MaterialStateProperty.all(StadiumBorder())),
-              child: Text(
-                'Crear una nueva cuenta',
-                style: TextStyle(fontSize: 18, color: Colors.black87),
-              )),
-          SizedBox(height: 50),
-        ],
-      ),
-    )));
-  }
-}
-
-class _LoginForm extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final loginForm = Provider.of<LoginFormProvider>(context);
-
-    return Container(
-      child: Form(
-        key: loginForm.formKey,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        child: Column(
-          children: [
-            TextFormField(
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecorations.authInputDecoration(
-                  hintText: 'john.doe@gmail.com',
-                  labelText: 'Correo electrónico',
-                  prefixIcon: Icons.alternate_email_rounded),
-              onChanged: (value) => loginForm.email = value,
-              validator: (value) {
-                String pattern =
-                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                RegExp regExp = new RegExp(pattern);
-
-                return regExp.hasMatch(value ?? '')
-                    ? null
-                    : 'El valor ingresado no luce como un correo';
-              },
+                children: [
+                  const SizedBox(height: 10),
+                  Text(
+                    'Iniciar Sección',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  const SizedBox(height: 10),
+                  Form(
+                      autovalidateMode: AutovalidateMode
+                          .onUserInteraction, // Valida siempre que el usuario haga una interación
+                      key: formkey, // Ya esta asocciado el key
+                      child: Column(
+                        children: [
+                          // Email
+                          TextFormField(
+                            autocorrect: false,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecorations.authInputDecorations(
+                              labelText: 'Correo Electronico',
+                              hintText: 'example@gmail.com',
+                              prefixIcon: Icons.alternate_email_outlined,
+                            ),
+                            controller: txtEmail,
+                            validator: (value) {
+                              String pattern =
+                                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                              RegExp regExp = RegExp(pattern);
+                              return regExp.hasMatch(value ?? '')
+                                  ? null
+                                  : 'Formato de correo invalido';
+                            },
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          TextFormField(
+                            autocorrect: false,
+                            obscureText: true, // Ocultar contenido
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecorations.authInputDecorations(
+                              labelText: 'Contraseña',
+                              hintText: '******',
+                              prefixIcon: Icons.lock_outline_rounded,
+                            ),
+                            controller: txtPassword,
+                            validator: (value) {
+                              return (value != null && value.length >= 6)
+                                  ? null
+                                  : 'La contraseña de tener al menos 6 caracteres';
+                            },
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          loading
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : kTextButton('Iniciar Seción', () {
+                                  if (formkey.currentState!.validate()) {
+                                    setState(() {
+                                      loading = true;
+                                      _loginUser();
+                                    });
+                                  }
+                                }),
+                        ],
+                      )),
+                ],
+              ),
             ),
-            SizedBox(height: 30),
-            TextFormField(
-              autocorrect: false,
-              obscureText: true,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecorations.authInputDecoration(
-                  hintText: '*****',
-                  labelText: 'Contraseña',
-                  prefixIcon: Icons.lock_outline),
-              onChanged: (value) => loginForm.password = value,
-              validator: (value) {
-                return (value != null && value.length >= 6)
-                    ? null
-                    : 'La contraseña debe de ser de 6 caracteres';
-              },
+            const SizedBox(
+              height: 50,
             ),
-            SizedBox(height: 30),
-            MaterialButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                disabledColor: Colors.grey,
-                elevation: 0,
-                color: Colors.deepOrange,
-                child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                    child: Text(
-                      loginForm.isLoading ? 'Espere' : 'Ingresar',
-                      style: TextStyle(color: Colors.white),
-                    )),
-                onPressed: loginForm.isLoading
-                    ? null
-                    : () async {
-                        FocusScope.of(context).unfocus();
-                        final authService =
-                            Provider.of<AuthService>(context, listen: false);
-
-                        if (!loginForm.isValidForm()) return;
-
-                        loginForm.isLoading = true;
-
-                        // validar si el login es correcto
-                        final String? errorMessage = await authService.login(
-                            loginForm.email, loginForm.password);
-
-                        if (errorMessage == null) {
-                          Navigator.pushReplacementNamed(context, 'home');
-                        } else {
-                          // mostrar error en pantalla
-                          // print( errorMessage );
-                          NotificationsService.showSnackbar(errorMessage);
-                          loginForm.isLoading = false;
-                        }
-                      })
-          ],
+            KLoginRegisterHint('No tienes una cuenta?', 'Registrate', () {
+              Navigator.of(context).pushNamed('register');
+            }),
+            const SizedBox(
+              height: 50,
+            ),
+          ]),
         ),
       ),
     );

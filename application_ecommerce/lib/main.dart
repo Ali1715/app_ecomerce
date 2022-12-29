@@ -1,9 +1,12 @@
+import 'package:application_ecommerce/pages/login_screen.dart';
 import 'package:application_ecommerce/services/services.dart';
+import 'package:application_ecommerce/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:application_ecommerce/pages/pages.dart';
 import 'package:application_ecommerce/models/models.dart';
 import 'package:application_ecommerce/providers/providers.dart';
 import 'package:provider/provider.dart';
+import 'package:vxstate/vxstate.dart';
 
 void main() {
   runApp(AppEstado());
@@ -44,7 +47,7 @@ class MyApp extends StatelessWidget {
 
         'Carrito_Page': (context) => CartPage(),
         'home': (context) => HomePage(),
-        'Producto': (context) => ProductoDetalles(),
+        'Producto': (context) => ProductoScreen(),
          'checking': (_) => CheckAuthScreen(),
         'login': (context) => LoginScreen(),
         'register': (_) => RegisterScreen(),

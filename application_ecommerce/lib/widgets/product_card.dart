@@ -1,7 +1,10 @@
 import 'package:application_ecommerce/models/models.dart';
+import 'package:application_ecommerce/pages/carrito.dart';
 import 'package:application_ecommerce/services/producto_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:application_ecommerce/services/services.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
   //const ProductCard({super.key});
@@ -15,16 +18,19 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 30, bottom: 20),
-      width: double.infinity,
-      height: 400,
+      width: 400,
+      height: 200,
+      //width: double.infinity,
+      //height: 400,
       decoration: _cardBordes(),
       child: Stack(
         alignment: Alignment.bottomLeft,
         children: [
           _backgroundImage(product.imagen),
-          _ProductDetalles(),
-          Positioned(top: 0, right: 0, child: _PrecioTag()),
-          Positioned(top: 0, left: 0, child: _enOferta()),
+          _ProductDetalles(product),
+          Positioned(top: 0, right: 0, child: _PrecioTag(product)),
+          // Positioned(top: 0, left: 0, child: _enOferta()),
+          Positioned(top: 150, left: 320, child: carritoIcon()),
         ],
       ),
     );
@@ -47,12 +53,14 @@ class _backgroundImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(25),
       child: Container(
-        width: double.infinity,
-        height: 400,
+        //width: double.infinity,
+        //height: 400,
+        width: 200,
+        height: 200,
         child: FadeInImage(
           placeholder: AssetImage('assets/no-image.png'),
-          image: AssetImage('assets/Laptop_HP_De_15_6_Pulgadas.png'),
-          //image: NetworkImage('http://192.168.0.18:8000/public/img/' + url!),
+          //image: AssetImage('assets/Laptop_HP_De_15_6_Pulgadas.png'),
+          image: NetworkImage('http://192.168.0.16:8000/public/img/' + url!),
           fit: BoxFit.cover,
         ),
       ),
@@ -62,6 +70,8 @@ class _backgroundImage extends StatelessWidget {
 
 class _ProductDetalles extends StatelessWidget {
   //var name = productoService().name;
+  final Productos producto;
+  const _ProductDetalles(this.producto);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -75,7 +85,7 @@ class _ProductDetalles extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Laptop_HP_De_15_6_Pulgadas',
+              producto.name,
               style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
@@ -84,7 +94,7 @@ class _ProductDetalles extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              'COMPUTADORA PORTÁTIL :PORTÁTIL HP DE 15,6 PULGADAS',
+              producto.descripcion,
               style: TextStyle(
                   fontSize: 12,
                   color: Colors.white,
@@ -92,8 +102,9 @@ class _ProductDetalles extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
+            //if
             Text(
-              'Stock: 9',
+              producto.stock.toString(),
               style: TextStyle(
                   fontSize: 12,
                   color: Colors.white,
@@ -114,6 +125,8 @@ class _ProductDetalles extends StatelessWidget {
 }
 
 class _PrecioTag extends StatelessWidget {
+  final Productos producto;
+  const _PrecioTag(this.producto);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -122,7 +135,7 @@ class _PrecioTag extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: (Text(
-            '\Bs2341,18',
+            '\Bs' + producto.precioUnitario.toString(),
             style: TextStyle(
                 fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
             maxLines: 1,
@@ -142,7 +155,7 @@ class _PrecioTag extends StatelessWidget {
 }
 
 //Mostrar de manera condicional
-class _enOferta extends StatelessWidget {
+/*class _enOferta extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -168,4 +181,58 @@ class _enOferta extends StatelessWidget {
               topLeft: Radius.circular(25), bottomRight: Radius.circular(25))),
     );
   }
+}*/
+///Mostrar de manera condicional
+class carritoIcon extends StatelessWidget {
+  //int _ItemCountadd = 0;
+  int _ItemCountadd = 1;
+  int ItemCountadd2 = 0;
+  @override
+  Widget build(BuildContext context) {
+    //  int _ItemCountadd = 1;
+    final productosService = Provider.of<productoService>(context);
+    return Container(
+        child: Column(
+      children: <Widget>[
+        IconButton(
+            onPressed: () {
+              ProductCard(product: productosService.selectedProduct);
+
+              //addProductToCart();
+              _ItemCountadd = ItemCountadd2 + 1;
+              ItemCountadd2 = _ItemCountadd;
+
+              // Navigator.pushNamed(context, 'AddCarrito');
+            },
+            icon: Icon(Icons.shopping_cart))
+      ],
+    ));
+  }
+
+  int addProductToCart() {
+    return addProductToCart2(ItemCountadd2);
+  }
+
+  @override
+  int addProductToCart2(int add) {
+    return add += 1;
+  }
 }
+
+
+
+  
+
+  /*int cantidadProducto(int num) {
+    //VxState.watch(context, on: []); //RemoveMutation]);
+
+    //  final store = MyStore();
+    //final Carritos _cart = (VxState.store as MyStore).cart;
+    //return _cart.items.isEmpty
+  
+    _cart += num;
+
+    return (_cart);
+  }
+
+*/

@@ -10,10 +10,11 @@ class productoService extends ChangeNotifier {
   //var db_p = new Mysql();
   //var name = '';
 
-  final String _baseUrl = 'http://192.168.0.18:8000/api/productos';
+  final String _baseUrl = 'http://192.168.0.16:8000/api/productos';
 
   final List<Productos> productos = [];
   var productosresp = <Productos>[];
+  late Productos selectedProduct;
   bool isLoading = true;
 
   productoService() {
@@ -42,7 +43,7 @@ class productoService extends ChangeNotifier {
     final resp = await http.get(url);
 
     final List<dynamic> productoMap = json.decode(resp.body);
-
+    //print(productoMap);
     //for (var items in productoMap) {
     productoMap.forEach((value) {
       final tempPro = Productos.fromMap(value);
