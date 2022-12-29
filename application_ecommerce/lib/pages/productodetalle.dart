@@ -1,4 +1,4 @@
-import 'package:application_ecommerce/widgest/widgests.dart';
+import 'package:application_ecommerce/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class ProductoDetalles extends StatelessWidget {
