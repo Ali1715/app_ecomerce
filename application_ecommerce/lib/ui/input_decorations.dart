@@ -10,13 +10,13 @@ class InputDecorations {
         // Activar linea, cuando esta seleccionado
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.deepPurple,
+            color: Color.fromARGB(255, 183, 53, 1),
           ),
         ),
         // Aumenta el tamaño de la linea
         focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(
-          color: Colors.deepPurple,
+          color: Color.fromARGB(255, 183, 53, 1),
           width: 2,
         )),
         hintText: hintText, // text dentro del input
@@ -32,7 +32,7 @@ class InputDecorations {
         prefixIcon: prefixIcon != null // Si existe lo
             ? Icon(
                 prefixIcon,
-                color: Colors.deepPurple,
+                color: Color.fromARGB(255, 183, 53, 1),
               )
             : null);
   }

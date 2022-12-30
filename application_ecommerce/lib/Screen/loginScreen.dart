@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:application_ecommerce/models/api_response.dart';
-import 'package:application_ecommerce/models/user.dart';
-import 'package:application_ecommerce/pages/homepage.dart';
+import 'package:application_ecommerce/models/usermodel.dart';
+import 'package:application_ecommerce/Screen/homeScreen.dart';
 //import 'package:application_ecommerce/screens/user/user_screen.dart';
 import 'package:application_ecommerce/services/user_service.dart';
 import 'package:application_ecommerce/ui/input_decorations.dart';

@@ -3,26 +3,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-Clientes ClienteFromJson(String str) => Clientes.fromJson(json.decode(str));
-String clienteToJson(Clientes data) => json.encode(data.toJson());
-
 class Clientes {
-  final int id;
+  int? id;
   final String name;
-  final String ci;
+  final int ci;
   final String email;
-  final String sexo;
-  final String celular;
+  final String? sexo;
+  final int celular;
   final String domicilio;
-  final String? salario;
+  final num? salario;
   final String? estadoemp;
   final String? estadocli;
-  final String? tipoc;
-  final String? tipoe;
-  final String? iduser;
+  final int? tipoc;
+  final int? tipoe;
+  final int? iduser;
 
-  const Clientes(
-      {required this.id,
+  Clientes(
+      {this.id,
       required this.name,
       required this.ci,
       required this.email,
@@ -36,7 +33,10 @@ class Clientes {
       this.tipoe,
       this.iduser});
 
-  factory Clientes.fromJson(Map<String, dynamic> json) => Clientes(
+  factory Clientes.fromJson(String str) => Clientes.fromMap(json.decode(str));
+  String toJson() => json.encode(toMap());
+
+  factory Clientes.fromMap(Map<String, dynamic> json) => Clientes(
         id: json["id"],
         name: json["name"],
         ci: json["ci"],
@@ -52,7 +52,7 @@ class Clientes {
         iduser: json["iduser"],
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
         "id": id,
         "name": name,
         "ci": ci,

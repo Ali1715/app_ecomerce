@@ -1,5 +1,5 @@
 import 'package:application_ecommerce/models/models.dart';
-import 'package:application_ecommerce/pages/carrito.dart';
+import 'package:application_ecommerce/Screen/carritoScreen.dart';
 import 'package:application_ecommerce/services/producto_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -59,7 +59,6 @@ class _backgroundImage extends StatelessWidget {
         height: 200,
         child: FadeInImage(
           placeholder: AssetImage('assets/no-image.png'),
-          //image: AssetImage('assets/Laptop_HP_De_15_6_Pulgadas.png'),
           image: NetworkImage('http://192.168.0.16:8000/public/img/' + url!),
           fit: BoxFit.cover,
         ),
@@ -182,11 +181,8 @@ class _PrecioTag extends StatelessWidget {
     );
   }
 }*/
-///Mostrar de manera condicional
+
 class carritoIcon extends StatelessWidget {
-  //int _ItemCountadd = 0;
-  int _ItemCountadd = 1;
-  int ItemCountadd2 = 0;
   @override
   Widget build(BuildContext context) {
     //  int _ItemCountadd = 1;
@@ -199,25 +195,14 @@ class carritoIcon extends StatelessWidget {
               ProductCard(product: productosService.selectedProduct);
 
               //addProductToCart();
-              _ItemCountadd = ItemCountadd2 + 1;
-              ItemCountadd2 = _ItemCountadd;
-
-              // Navigator.pushNamed(context, 'AddCarrito');
             },
             icon: Icon(Icons.shopping_cart))
       ],
     ));
   }
-
-  int addProductToCart() {
-    return addProductToCart2(ItemCountadd2);
-  }
-
-  @override
-  int addProductToCart2(int add) {
-    return add += 1;
-  }
 }
+
+class addPro {}
 
 
 

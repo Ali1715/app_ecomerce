@@ -1,12 +1,14 @@
-import 'package:application_ecommerce/pages/login_screen.dart';
+import 'package:application_ecommerce/Screen/loginScreen.dart';
+import 'package:application_ecommerce/router/router.dart';
 import 'package:application_ecommerce/services/services.dart';
 import 'package:application_ecommerce/services/user_service.dart';
 import 'package:flutter/material.dart';
-import 'package:application_ecommerce/pages/pages.dart';
+import 'package:application_ecommerce/Screen/Screen.dart';
 import 'package:application_ecommerce/models/models.dart';
 import 'package:application_ecommerce/providers/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:vxstate/vxstate.dart';
+import 'package:application_ecommerce/widgets/widgets.dart';
 
 void main() {
   runApp(AppEstado());
@@ -21,7 +23,8 @@ class AppEstado extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => productoService(),
-        )
+        ),
+        // Provider<_MyHomePageState>(create: (_) => _MyHomePageState()),
       ],
       child: MyApp(),
     );
@@ -50,6 +53,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: LoginScreen(),
+      onGenerateRoute: AppRouter.onGenerateRoute,
+      // initialRoute: HomePage.routeName,
       home: HomePage(),
       routes: {
         //  'Catalogo_page': (context) => CatalogoPage(),
@@ -57,7 +62,8 @@ class MyApp extends StatelessWidget {
         'Carrito_Page': (context) => CartPage(),
         'home': (context) => HomePage(),
         'Producto': (context) => ProductoScreen(),
-        'AddCarrito': (context) => CartPage(), //Metodo
+        'AddCarrito': (context) => CartPage(),
+        // 'DatoCartCliente': (context) => DatoCartClienteScreen(),
       },
     );
   }
