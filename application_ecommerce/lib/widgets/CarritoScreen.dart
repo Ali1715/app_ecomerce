@@ -6,11 +6,10 @@ import 'package:application_ecommerce/models/models.dart';
 import 'package:vxstate/vxstate.dart';
 
 class CartProductoCart extends StatelessWidget {
-  _State createState() => new _State();
+  // _State createState() => new _State();
 
   final Productos product;
-  int count = 0;
-  CartProductoCart({
+  const CartProductoCart({
     Key? key,
     required this.product,
     // required this.cantidad,
@@ -25,7 +24,7 @@ class CartProductoCart extends StatelessWidget {
     return Row(
       children: [
         Image.network(
-          'http://192.168.0.16:8000/public/img/' + product.imagen!,
+          'http://192.168.0.16:8000/public/img/' + product.imagen,
           fit: BoxFit.cover,
           width: 100,
           height: 80,
@@ -40,55 +39,62 @@ class CartProductoCart extends StatelessWidget {
               //style: Theme.of(context).textTheme.bodyMedium ,
               style: TextStyle(color: Colors.orange),
             ),
-            Row(
-              children: [
-                IconButton(onPressed: () {}, icon: Icon(Icons.remove_circle)),
-                // Text(_State().count.toString()),
-                Text(' ${count}'),
-                IconButton(
-                    onPressed: () => {
-                          incrementCounter(),
-                        },
-                    icon: Icon(Icons.add_circle)),
-              ],
-            )
+            StateCount()
           ],
         ),
       ],
     );
   }
 
-  void incrementCounter() {
-    _State().setState(() {
-      count++;
-    });
-  }
+  // @override
+  //State<CartProductoCart> createState() => _State();
+  //stateful() => _ProductCartStateful();
 }
 
-class _State extends State {
-  int count = 0;
+class StateCount extends StatefulWidget {
+  @override
+  _State createState() => _State();
+}
 
-  void incrementCounter() {
+class _State extends State<StateCount> {
+  int counter = 0;
+  var db = new Mysql();
+  void _incrementCounter() {
     setState(() {
-      count++;
+      counter++;
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      if (counter > 1) {
+        counter--;
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Flutter Tutorial - googleflutter.com'),
-      ),
-      body: Container(
-        child: Column(children: <Widget>[
-          IconButton(
-            onPressed: () => {incrementCounter()},
-            icon: Icon(Icons.add_circle),
-          ),
-          new Text('Button Clicks - ${count}')
-        ]),
-      ),
+    return Row(
+      children: [
+        IconButton(
+            onPressed: () => {
+                  setState(() {
+                    _decrementCounter();
+                  })
+                },
+            icon: Icon(Icons.remove_circle)),
+        // Text(_State().count.toString()),
+        Text('$counter'),
+        IconButton(
+            onPressed: () => {
+                  setState(() {
+                    _incrementCounter();
+                  })
+                },
+            icon: Icon(Icons.add_circle)),
+      ],
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

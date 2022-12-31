@@ -11,11 +11,20 @@ import 'package:http/http.dart' as http;
 import 'package:application_ecommerce/widgets/widgets.dart';
 import 'package:application_ecommerce/services/services.dart';
 import 'package:provider/provider.dart';
+import 'package:application_ecommerce/services/user_service.dart';
+
 
 
 //import 'package:application_ecommerce/providers/providers.dart';
 
 class HomePage extends StatefulWidget {
+  static const String routeName = '/Homepage';
+  static Route route() {
+    return MaterialPageRoute(
+        builder: (context) => DatoCartClienteScreen(),
+        settings: RouteSettings(name: routeName));
+  }
+
   const HomePage({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
@@ -33,6 +42,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final productosService = Provider.of<productoService>(context);
+
     if (productosService.isLoading) return loadingHomeProductos();
 
     return Scaffold(
@@ -123,6 +133,35 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      /*FutureBuilder<List<Carritos>>(
+                future: CartController.fetchCarritoList(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error'),
+                    );
+                  }
+                  return ListView.separated(
+                      itemBuilder: (context, index) {
+                        var todo = snapshot.data?[index];
+                        return Container(
+                          height: 80,
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Row(
+                            children: [
+                              Expanded(flex: 1, child: Text('1')),
+                            ],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return Divider(thickness: 0.5, height: 0.5);
+                      },
+                      itemCount: snapshot.data?.length ?? 0);
+                })*/
     );
   }
 }

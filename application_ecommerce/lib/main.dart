@@ -1,12 +1,18 @@
-import 'package:application_ecommerce/pages/login_screen.dart';
+import 'package:application_ecommerce/Screen/loginScreen.dart';
+import 'package:application_ecommerce/router/router.dart';
 import 'package:application_ecommerce/services/services.dart';
 import 'package:application_ecommerce/services/user_service.dart';
 import 'package:flutter/material.dart';
-import 'package:application_ecommerce/pages/pages.dart';
+import 'package:application_ecommerce/Screen/Screen.dart';
 import 'package:application_ecommerce/models/models.dart';
 import 'package:application_ecommerce/providers/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:vxstate/vxstate.dart';
+import 'package:application_ecommerce/widgets/widgets.dart';
+import 'package:application_ecommerce/Screen/register_screen.dart';
+import 'package:application_ecommerce/services/auth_service.dart';
+import 'package:application_ecommerce/Screen/check_auth_screen.dart';
+
 
 void main() {
   runApp(AppEstado());
@@ -22,6 +28,7 @@ class AppEstado extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => productoService()),
           ChangeNotifierProvider(create: (_) => AuthService()),
+        // Provider<_MyHomePageState>(create: (_) => _MyHomePageState()),,
       ],
       child: MyApp(),
     );

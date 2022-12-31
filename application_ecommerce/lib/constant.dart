@@ -28,8 +28,8 @@ SizedBox kTextButton(String label, Function onPressed) {
       padding: const EdgeInsets.all(8.0),
       child: TextButton(
         style: ButtonStyle(
-            backgroundColor:
-                MaterialStateColor.resolveWith((states) => Colors.indigo),
+            backgroundColor: MaterialStateColor.resolveWith(
+                (states) => Color.fromARGB(255, 183, 53, 1)),
             padding: MaterialStateProperty.resolveWith(
                 (states) => EdgeInsets.symmetric(vertical: 10))),
         onPressed: () => onPressed(),

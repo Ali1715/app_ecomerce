@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:application_ecommerce/constant.dart';
 import 'package:application_ecommerce/models/api_response.dart';
-import 'package:application_ecommerce/models/user.dart';
+import 'package:application_ecommerce/models/usermodel.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

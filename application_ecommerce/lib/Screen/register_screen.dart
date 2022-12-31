@@ -6,6 +6,8 @@ import 'package:application_ecommerce/services/services.dart';
 
 import 'package:application_ecommerce/ui/input_decorations.dart';
 import 'package:application_ecommerce/widgets/widgets.dart';
+import 'package:application_ecommerce/services/auth_service.dart';
+import 'package:application_ecommerce/constant.dart';
 
 class RegisterScreen extends StatelessWidget {
   @override
@@ -59,7 +61,7 @@ class _LoginForm extends StatelessWidget {
             TextFormField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecorations.authInputDecoration(
+              decoration: InputDecorations.authInputDecorations(
                   hintText: 'john.doe@gmail.com',
                   labelText: 'Correo electrónico',
                   prefixIcon: Icons.alternate_email_rounded),
@@ -79,7 +81,7 @@ class _LoginForm extends StatelessWidget {
               autocorrect: false,
               obscureText: true,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecorations.authInputDecoration(
+              decoration: InputDecorations.authInputDecorations(
                   hintText: '*****',
                   labelText: 'Contraseña',
                   prefixIcon: Icons.lock_outline),

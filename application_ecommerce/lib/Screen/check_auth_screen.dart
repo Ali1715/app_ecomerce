@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:application_ecommerce/pages/pages.dart';
 import 'package:application_ecommerce/services/services.dart';
+import 'package:application_ecommerce/services/auth_service.dart';
 
 class CheckAuthScreen extends StatelessWidget {
   @override
