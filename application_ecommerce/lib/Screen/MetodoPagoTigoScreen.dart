@@ -74,7 +74,7 @@ class _PagoTigoScreenState extends State<MetodoPagoTigoScreen> {
                   style: TextStyle(color: Colors.black),
                 )),
             SizedBox(height: 20),
-            ButtonNextInDirPage()
+            ButtonNext(),
           ],
         ))
                 // child: ListView.builder(itemBuilder: cards.length),
@@ -112,7 +112,7 @@ class _Barseguimiento extends StatelessWidget {
 }
 
 /***************************Boton Red Confirmar*********************************************** */
-class ButtonNextInDirPage extends StatelessWidget {
+class ButtonNext extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

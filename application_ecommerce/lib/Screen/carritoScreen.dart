@@ -5,7 +5,7 @@ import 'dart:ui';
 import 'package:application_ecommerce/router/router.dart';
 import 'package:equatable/equatable.dart';
 import 'package:application_ecommerce/models/carritomodel.dart';
-import 'package:application_ecommerce/widgets/cart_product_cart_CarritoScreen.dart';
+import 'package:application_ecommerce/widgets/CarritoScreen.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

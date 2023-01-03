@@ -111,7 +111,7 @@ class _Barseguimiento extends StatelessWidget {
 }
 
 /***************************Boton Red Confirmar*********************************************** */
-class ButtonNextInDirPage extends StatelessWidget {
+class ButtonNextPaso extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

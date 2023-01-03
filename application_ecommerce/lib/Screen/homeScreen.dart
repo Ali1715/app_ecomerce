@@ -13,6 +13,10 @@ import 'package:http/http.dart' as http;
 import 'package:application_ecommerce/widgets/widgets.dart';
 import 'package:application_ecommerce/services/services.dart';
 import 'package:provider/provider.dart';
+import 'package:application_ecommerce/services/user_service.dart';
+
+
+
 //import 'package:application_ecommerce/providers/providers.dart';
 
 class HomePage extends StatefulWidget {

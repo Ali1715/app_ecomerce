@@ -1,4 +1,4 @@
-import 'package:application_ecommerce/widgets/product_card_HomeScreen.dart';
+import 'package:application_ecommerce/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
