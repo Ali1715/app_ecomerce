@@ -1,3 +1,5 @@
+import 'package:application_ecommerce/Screen/TipoPagoScreen.dart';
+import 'package:application_ecommerce/Screen/carritoScreen.dart';
 import 'package:application_ecommerce/models/carritomodel.dart';
 import 'package:application_ecommerce/repository/ClienteRepository.dart';
 import 'package:flutter/gestures.dart';
@@ -18,8 +20,9 @@ class DatoCartClienteScreen extends StatelessWidget {
   static const String routeName = '/DatoCartClienteScreen';
   static Route route() {
     return MaterialPageRoute(
-        builder: (context) => DatoCartClienteScreen(),
-        settings: RouteSettings(name: routeName));
+      builder: (context) => DatoCartClienteScreen(),
+      settings: RouteSettings(name: routeName),
+    );
   }
 
   const DatoCartClienteScreen({super.key});
@@ -31,68 +34,67 @@ class DatoCartClienteScreen extends StatelessWidget {
     var Clienetcontroller = ClienteController(ClienteRepository());
     //Clienetcontroller.fetchClientesList();
     return Scaffold(
-      backgroundColor: context.canvasColor,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        title: "Checkout".text.bold.size(20).make(),
-      ),
-      body: FutureBuilder<List<Clientes>>(
-        future: Clienetcontroller.fetchClientesList(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text('ERROR'),
-            );
-          }
-          return ListView.separated(
-            itemBuilder: (context, index) {
-              var clientetodo = snapshot.data?[index];
-              return Container(
-                height: 20.0,
-                padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                child: Row(children: [
-                  Expanded(child: Text('Name ${clientetodo?.name}')),
-                ]),
+        backgroundColor: context.canvasColor,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          title: "Checkout".text.bold.size(20).make(),
+        ),
+        body: Container(
+            child: Column(children: [
+          PagoScreen(),
+          InformacionCliente(),
+          SizedBox(
+            height: 217,
+          ),
+          ButtonNextInDirPage(),
+        ])));
+  }
+}
+
+class DatoInfoClienteResp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var Clienetcontroller = ClienteController(ClienteRepository());
+    return Container(
+        child: Stack(
+      children: <Widget>[
+        FutureBuilder<List<Clientes>>(
+          future: Clienetcontroller.fetchClientesList(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('ERROR'),
               );
-            },
-            separatorBuilder: (context, index) {
-              return Divider(thickness: 1, height: 25);
-            },
-            itemCount: snapshot.data?.length ?? 0,
-          );
-        },
-      ),
-      /*Column(
-        children: [
-          _Barseguimiento(),
-          Column(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '                            Datos de Envio',
-                  style: TextStyle(
-                      height: 1, fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-          Column( 
-            children: [
-              InformacionCliente(),
-            ],
-          ),
-          Column(
-            children: [
-              SizedBox(height: 0),
-              Divider(thickness: 1),
-              ButtonNextInDirPage(),
-            ],
-          ),
-        ],
-      ),*/
-    );
+            }
+
+            return ListView.separated(
+              itemBuilder: (context, index) {
+                var clientetodo = snapshot.data?[index];
+                return Container(
+                  height: 20.0,
+                  padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                  child: Row(children: [
+                    Expanded(child: Text('Name ${clientetodo?.name}')),
+                  ]),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return Divider(thickness: 1, height: 25);
+              },
+              itemCount: snapshot.data?.length ?? 0,
+            );
+            /*Column(
+                  children: [
+                    //SizedBox(height: 0),
+                    Divider(thickness: 1),
+                    ButtonNextInDirPage(),
+                  ],
+                )*/
+          },
+        )
+      ],
+    ));
   }
 }
 
@@ -104,6 +106,8 @@ class InformacionCliente extends StatelessWidget {
   //final TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final productosService = Provider.of<productoService>(context);
+    var Clienetcontroller = ClienteController(ClienteRepository());
     return Padding(
       padding: const EdgeInsets.all(20.8),
       child: Column(
@@ -114,18 +118,28 @@ class InformacionCliente extends StatelessWidget {
             'Informacion de Cliente',
             style: Theme.of(context).textTheme.headline6,
           ),
-          _buildTextFormField(emailController, context, 'Email'),
+          //_buildTextFormField(emailController, context, 'Email'),
           //  SizedBox(height: 100),
+          Text('Nombre:' + ' ' + 'Galvin Golden'),
+          Text('Email:' + ' ' + 'g@gmail.com'),
+          Text('CI:' + ' ' + '9866027'),
+          Text('Celular:' + ' ' + '6052217'),
+          // DatoInfoClienteResp(),
           Text(
             'Direccion de Envio',
             style: Theme.of(context).textTheme.headline6,
           ),
           //SizedBox(height: 100),
+          //   Text('Direccion:' + ' ' + 'Galvin Golden'),
+          _buildTextFormField(emailController, context, 'Direccion'),
           Text(
             'Costo de Orden',
             style: Theme.of(context).textTheme.headline6,
           ),
           // SizedBox(height: 100),
+          Text('Subtotal:' + ''),
+          Text('Costo de Envio:' + ''),
+          Text('Total:' + '')
         ],
       ),
     );
@@ -137,17 +151,29 @@ class InformacionCliente extends StatelessWidget {
     String labelText,
   ) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(children: [
-        SizedBox(
-          width: 80,
-          child: Text(
-            labelText,
-            style: Theme.of(context).textTheme.bodyText2,
+        padding: const EdgeInsets.all(8.0),
+        child: Row(children: [
+          SizedBox(
+            width: 60,
+            child: Text(
+              labelText,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
-        )
-      ]),
-    );
+          Expanded(
+            child: TextFormField(
+              //initialValue: 'Direccion',
+              controller: controller,
+              decoration: InputDecoration(
+                  isDense: true,
+                  contentPadding: const EdgeInsets.only(left: 10),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                    color: Colors.black,
+                  ))),
+            ),
+          )
+        ]));
   }
 }
 
@@ -192,7 +218,8 @@ class ButtonNextInDirPage extends StatelessWidget {
             primary: Colors.redAccent,
           ),
           child: Text('Continuar'),
-          onPressed: () => {Navigator.pushNamed(context, 'DirEnvio')},
+          onPressed: () =>
+              {Navigator.pushNamed(context, '/MetodoPagoTigoScreen')},
         ),
       ],
     ));

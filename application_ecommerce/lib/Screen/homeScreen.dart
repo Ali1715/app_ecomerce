@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:application_ecommerce/controller/CarritoController.dart';
+import 'package:application_ecommerce/models/usermodel.dart';
 import 'package:application_ecommerce/repository/CarritoRepository.dart';
 import 'package:application_ecommerce/Screen/Screen.dart';
 import 'package:application_ecommerce/models/models.dart';
@@ -38,6 +40,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final productosService = Provider.of<productoService>(context);
+    final user = User();
+    //final name=''
 
     if (productosService.isLoading) return loadingHomeProductos();
 
@@ -72,12 +76,37 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      drawer: SidebarX(
-        controller: SidebarXController(selectedIndex: 0, extended: true),
-        items: const [
-          SidebarXItem(icon: Icons.home, label: 'Home'),
-          SidebarXItem(icon: Icons.search, label: 'Search'),
-        ],
+      drawer: Container(
+        width: 300,
+        // padding: EdgeInsets.only(right: 100.0),
+        color: Colors.white,
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          //padding: EdgeInsets.only(right: 100.0),
+          children: <Widget>[
+            // _buildHeader(
+            // name: getUserName(),
+            //   ),
+
+            //Navigator.of(context)
+
+            ListTile(
+              title: const Text('Galvin Golden'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text('g@gmail.com'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
       ),
       body: Container(
         height: double.infinity,
@@ -115,16 +144,31 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
               itemCount: productosService.productos.length,
               itemBuilder: (BuildContext context, int index) => GestureDetector(
-                onTap: () {
-                  productosService.selectedProduct =
-                      productosService.productos[index].copy();
+                  onTap: () {
+                    productosService.selectedProduct =
+                        productosService.productos[index].copy();
 
-                  Navigator.pushNamed(context, 'Producto');
-                },
-                child: ProductCard(
-                  product: productosService.productos[index],
-                ),
-              ),
+                    Navigator.pushNamed(context, 'Producto');
+                  },
+                  child: Column(children: [
+                    ProductCard(
+                      product: productosService.productos[index],
+                    ),
+                    Column(
+                      children: <Widget>[
+                        IconButton(
+                            onPressed: () {
+                              productosService.selectedProduct =
+                                  productosService.productos[index].copy();
+                              productosService.listselectProductos
+                                  .add(productosService.selectedProduct);
+
+                              //Navigator.pushNamed(context, 'Producto');
+                            },
+                            icon: Icon(Icons.shopping_cart))
+                      ],
+                    )
+                  ])),
             )),
           ],
         ),
@@ -159,5 +203,30 @@ class _HomePageState extends State<HomePage> {
                       itemCount: snapshot.data?.length ?? 0);
                 })*/
     );
+  }
+}
+
+class _buildHeader extends StatelessWidget {
+  final Future<String> name;
+  // required VoidCallback onClicked,
+
+  const _buildHeader({
+    Key? key,
+    required this.name,
+    // required this.email,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    //name:
+    //getUserName().toString();
+    //email:user.email,
+    return Container(
+      child: Text(name.toString()),
+    );
+  }
+
+  onClicked() {
+    //Navigator.push(context, 'UserPage');
   }
 }

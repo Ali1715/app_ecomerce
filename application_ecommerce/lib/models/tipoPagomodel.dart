@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 class TipoPago {
-  int? id;
+  String? id;
   final String nombre;
   String? qr;
-  final int nroCta;
+  final String nroCta;
 
   TipoPago({
     this.id,

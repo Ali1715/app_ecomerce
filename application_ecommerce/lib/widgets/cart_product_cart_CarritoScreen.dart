@@ -24,7 +24,7 @@ class CartProductoCart extends StatelessWidget {
     return Row(
       children: [
         Image.network(
-          'http://192.168.0.16:8000/public/img/' + product.imagen,
+          'http://192.168.0.11:8000/public/img/' + product.imagen,
           fit: BoxFit.cover,
           width: 100,
           height: 80,
@@ -57,7 +57,7 @@ class StateCount extends StatefulWidget {
 }
 
 class _State extends State<StateCount> {
-  int counter = 0;
+  int counter = 1;
   var db = new Mysql();
   void _incrementCounter() {
     setState(() {

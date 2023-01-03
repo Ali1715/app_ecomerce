@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class ClienteRepository implements RepositoryCliente {
   //int idusuarioauth=
   final User usuarioauth = User();
-  String _baseUrl = 'http://192.168.0.16:8000/api/cliente${User(id: 7)}';
+  String _baseUrl = 'http://192.168.0.16:8000/api/cliente';
 
   final List<Clientes> ClientesList = [];
   var productosresp = <Clientes>[];

@@ -1,3 +1,4 @@
+import 'package:application_ecommerce/Screen/homeScreen.dart';
 import 'package:application_ecommerce/models/models.dart';
 import 'package:application_ecommerce/Screen/carritoScreen.dart';
 import 'package:application_ecommerce/services/producto_service.dart';
@@ -30,7 +31,7 @@ class ProductCard extends StatelessWidget {
           _ProductDetalles(product),
           Positioned(top: 0, right: 0, child: _PrecioTag(product)),
           // Positioned(top: 0, left: 0, child: _enOferta()),
-          Positioned(top: 150, left: 320, child: carritoIcon()),
+          //Positioned(top: 150, left: 320, child: carritoIcon()),
         ],
       ),
     );
@@ -59,7 +60,7 @@ class _backgroundImage extends StatelessWidget {
         height: 200,
         child: FadeInImage(
           placeholder: AssetImage('assets/no-image.png'),
-          image: NetworkImage('http://192.168.0.16:8000/public/img/' + url!),
+          image: NetworkImage('http://192.168.0.11:8000/public/img/' + url!),
           fit: BoxFit.cover,
         ),
       ),
@@ -185,6 +186,7 @@ class _PrecioTag extends StatelessWidget {
 class carritoIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //  int index =
     //  int _ItemCountadd = 1;
     final productosService = Provider.of<productoService>(context);
     return Container(
@@ -192,9 +194,10 @@ class carritoIcon extends StatelessWidget {
       children: <Widget>[
         IconButton(
             onPressed: () {
-              ProductCard(product: productosService.selectedProduct);
+              // productosService.selectedProduct =
+              //        productosService.productos[index].copy();
 
-              //addProductToCart();
+              Navigator.pushNamed(context, 'Producto');
             },
             icon: Icon(Icons.shopping_cart))
       ],
@@ -204,11 +207,7 @@ class carritoIcon extends StatelessWidget {
 
 class addPro {}
 
-
-
-  
-
-  /*int cantidadProducto(int num) {
+/*int cantidadProducto(int num) {
     //VxState.watch(context, on: []); //RemoveMutation]);
 
     //  final store = MyStore();

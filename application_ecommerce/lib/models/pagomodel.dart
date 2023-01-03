@@ -55,3 +55,33 @@ class Pago {
         id_tipoPago: this.id_tipoPago,
       );
 }
+
+/**************************************************** */
+class PagoDatos {
+  final int? id;
+  final String ctaOrd;
+  final String monto;
+  final String costoEnv;
+  final String idTrans;
+  final String id_tipoPago;
+
+  const PagoDatos({
+    this.id,
+    required this.ctaOrd,
+    required this.monto,
+    required this.costoEnv,
+    required this.idTrans,
+    required this.id_tipoPago,
+  });
+
+  factory PagoDatos.fromJson(Map<String, dynamic> json) {
+    return PagoDatos(
+      id: json["id"],
+      ctaOrd: json["ctaOrd"],
+      monto: json["monto"],
+      costoEnv: json["costoEnv"],
+      idTrans: json["idTrans"],
+      id_tipoPago: json["id_tipoPago"],
+    );
+  }
+}

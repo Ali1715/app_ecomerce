@@ -1,6 +1,8 @@
+import 'dart:ffi';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'package:application_ecommerce/router/router.dart';
 import 'package:equatable/equatable.dart';
 import 'package:application_ecommerce/models/carritomodel.dart';
 import 'package:application_ecommerce/widgets/cart_product_cart_CarritoScreen.dart';
@@ -20,8 +22,17 @@ import 'package:vxstate/vxstate.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 /******************CartPage*********************************************** */
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
   const CartPage({super.key});
+  @override
+  State<CartPage> createState() => _CartPage();
+}
+
+class _CartPage extends State<CartPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +65,7 @@ class CartPage extends StatelessWidget {
                 child: Text(
                   '    Productos' +
                       '(' +
-                      '1' +
+                      productosService.listselectProductos.length.toString() +
                       // anadir cant de productos en carrito
                       ')',
                   style: TextStyle(
@@ -66,31 +77,87 @@ class CartPage extends StatelessWidget {
 /****************************************************************************************** */
           VaciarCarrito(),
           //if (productosService.isLoading)
-          _CartList().p16().expand(),
-          // else
-          //  Container(
-          //   height: 340,
-          // ),
+          if (productosService.listselectProductos.length != 0)
+            (_CartList().p16().expand())
+          else
+            Container(
+              height: 305,
+            ),
           Divider(thickness: 1),
-          // if (productosService.isLoading)
-          _CartSubTotal(
-            product: productosService.selectedProduct,
-          ),
-          //else
-          //  (Text('')),
-          // if (productosService.isLoading)
-          _CostoEnvio(
-            product: productosService.selectedProduct,
-          ),
-          //else
-          // (Text('')),
+          if (productosService.listselectProductos.length != 0)
+            (CartSubTotal(
+              product: productosService.selectedProduct,
+            ))
+          else
+            (Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Column(children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Subtotal',
+                      style: Theme.of(context).textTheme.headline6),
+                  //Sumar totales y mostrar
+                ),
+              ]),
+              Column(children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child:
+                      //cargar el total
+                      Text('Bs:0000',
+                          style: TextStyle(color: Colors.orange, fontSize: 18)),
+                )
+              ]),
+            ])),
+          if (productosService.listselectProductos.length != 0)
+            (CostoEnvio(
+              product: productosService.selectedProduct,
+            ))
+          else
+            (Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Column(children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Costo de Envio',
+                      style: Theme.of(context).textTheme.headline6),
+                  //Sumar totales y mostrar
+                ),
+              ]),
+              Column(children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child:
+                      //cargar el total
+                      Text('Bs:0000',
+                          style: TextStyle(color: Colors.orange, fontSize: 18)),
+                )
+              ]),
+            ])),
           Divider(thickness: 1),
-          //if (productosService.isLoading)
-          _CartTotal(
-            product: productosService.selectedProduct,
-          ),
-          //else
-          //   (Text('')),
+          if (productosService.listselectProductos.length != 0)
+            (CartTotal(
+              product: productosService.selectedProduct,
+            ))
+          else
+            (Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Column(children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Total',
+                      style: Theme.of(context).textTheme.headline6),
+                  //Sumar totales y mostrar
+                ),
+              ]),
+              Column(children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child:
+                      //cargar el total
+                      Text('Bs:0000',
+                          style: TextStyle(color: Colors.orange, fontSize: 18)),
+                )
+              ]),
+            ])),
+
           Divider(thickness: 1),
           ButtonNextInCartPage(),
         ],
@@ -100,10 +167,23 @@ class CartPage extends StatelessWidget {
 }
 
 /*********************CartTotal******************************************************* */
-class _CartTotal extends StatelessWidget {
+
+class CartTotalPp extends StatelessWidget {
+  final Productos product;
+  const CartTotalPp({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Text('${product.precioUnitario.toString()}');
+  }
+}
+
+class CartTotal extends StatelessWidget {
   final Productos product;
   // final Carritos carritototal;
-  const _CartTotal({
+  const CartTotal({
     Key? key,
     required this.product,
   }) : super(key: key);
@@ -149,9 +229,17 @@ class _CartTotal extends StatelessWidget {
 }*/
 
 /************************Cart Subtotal***************************************************** */
-class _CartSubTotal extends StatelessWidget {
+class CostoSubTotalP extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final productosService = Provider.of<productoService>(context);
+    return CartSubTotal(product: productosService.selectedProduct);
+  }
+}
+
+class CartSubTotal extends StatelessWidget {
   final Productos product;
-  const _CartSubTotal({
+  const CartSubTotal({
     Key? key,
     required this.product,
   }) : super(key: key);
@@ -186,9 +274,17 @@ class _CartSubTotal extends StatelessWidget {
 }
 
 /********************Costo de Envio*************************************************************** */
-class _CostoEnvio extends StatelessWidget {
+class CostoEnvioP extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final productosService = Provider.of<productoService>(context);
+    return CostoEnvio(product: productosService.selectedProduct);
+  }
+}
+
+class CostoEnvio extends StatelessWidget {
   final Productos product;
-  const _CostoEnvio({
+  const CostoEnvio({
     Key? key,
     required this.product,
   }) : super(key: key);
@@ -230,17 +326,13 @@ class _CartList extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: ListView.builder(
-              itemCount: 1,
+              itemCount: productosService.listselectProductos.length,
               itemBuilder: (BuildContext context, int index) => GestureDetector(
-                  onTap: () {
-                    // productosService.selectedProduct =
-                    //   productosService.productos[index].copy();
-                    //Navigator.pushNamed(context, 'Producto');
-                  },
+                  onTap: () {},
                   //carga el producto seleccionado
 
                   child: CartProductoCart(
-                    product: productosService.selectedProduct,
+                    product: productosService.listselectProductos[index],
                   ))),
         ),
       ],
@@ -298,17 +390,51 @@ class ButtonNextInCartPage extends StatelessWidget {
 }
 
 /************************VaciarCarrito******************************************************* */
-class VaciarCarrito extends StatelessWidget {
+class VaciarCarrito extends StatefulWidget {
+  @override
+  State<VaciarCarrito> createState() => VaciarCarritoState();
+}
+
+class VaciarCarritoState extends State<VaciarCarrito> {
+  var list;
+  var random;
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
+  @override
+  void initState() {
+    super.initState();
+    random = Random();
+    refreshList();
+    RefreshIndicator(child: CartPage(), onRefresh: refreshList);
+  }
+
+  Future<Null> refreshList() async {
+    refreshKey.currentState?.show();
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      list = List.generate(random.nextInt(10), (i) => "Item $i");
+    });
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final productosService = Provider.of<productoService>(context);
     return Row(children: [
       WidthBox(260),
       Text('Vaciar Carrito', style: TextStyle(color: Colors.red)),
       IconButton(
           onPressed: () {
-            // context.read().delete();
-            Delete:
-            _CartList().build(context);
+            setState(() {
+              productosService.listselectProductos.clear();
+              Future.microtask(() {
+                Navigator.pushNamed(context, 'Carrito_Page');
+
+                transitionDuration:
+                Duration(seconds: 0);
+              });
+              // refreshList();
+              //Navigator.pushNamed(context, 'Carrito_Page');
+            });
           },
           icon: Icon(Icons.delete_forever_rounded)),
     ]);

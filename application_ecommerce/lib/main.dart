@@ -1,6 +1,8 @@
 import 'package:application_ecommerce/Screen/loginScreen.dart';
+import 'package:application_ecommerce/Screen/pdffactura.dart';
 import 'package:application_ecommerce/router/router.dart';
 import 'package:application_ecommerce/services/services.dart';
+import 'package:application_ecommerce/services/tipo_pago_servive.dart';
 import 'package:application_ecommerce/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:application_ecommerce/Screen/Screen.dart';
@@ -25,6 +27,9 @@ class AppEstado extends StatelessWidget {
           create: (_) => productoService(),
         ),
         // Provider<_MyHomePageState>(create: (_) => _MyHomePageState()),
+        // ChangeNotifierProvider(
+        Provider<tipopagoservice>(create: (_) => tipopagoservice())
+        // )
       ],
       child: MyApp(),
     );
@@ -63,6 +68,9 @@ class MyApp extends StatelessWidget {
         'home': (context) => HomePage(),
         'Producto': (context) => ProductoScreen(),
         'AddCarrito': (context) => CartPage(),
+        'TipoPagoService': (context) => tipopagoservice(),
+        'CarritoPage': (context) => CarritoPage(),
+
         // 'DatoCartCliente': (context) => DatoCartClienteScreen(),
       },
     );

@@ -5,3 +5,5 @@ export 'package:application_ecommerce/Screen/loadingScreen.dart';
 export 'package:application_ecommerce/Screen/loginScreen.dart';
 export 'package:application_ecommerce/Screen/carritoScreen.dart';
 export 'package:application_ecommerce/Screen/DatoCartClieneScreen.dart';
+export 'package:application_ecommerce/Screen/UserPage.dart';
+export 'package:application_ecommerce/Screen/pdffactura.dart';
